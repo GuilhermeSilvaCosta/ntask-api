@@ -7,7 +7,7 @@ module.exports = app => {
     const strategy = new Strategy({jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('jwt'), secretOrKey: cfg.jwtSecret},
         async (payload, done) => {
             try {
-                const user = await Users.findById(payload.id);
+                const user = await Users.findByPk(payload.id);
                 if (user) {
                     return done(null, {
                         id: user.id,

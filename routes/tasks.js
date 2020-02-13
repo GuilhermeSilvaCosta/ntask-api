@@ -30,9 +30,8 @@ module.exports = app => {
          */
         .get(async (req, res) => {
             try {
-                console.log(req.user.id)
                 const tasks = await Tasks.findAll({where: {user_id: req.user.id}});
-                res.json({tasks});
+                res.json(tasks);
             } catch(e) {
                 res.status(412).json({msg: e.message})
             }
@@ -110,7 +109,7 @@ module.exports = app => {
          */
         .get(async (req, res) => {
             try {
-                const result = await Tasks.findOne({where: {id: req.params.id, user_id: req.use.id}})
+                const result = await Tasks.findOne({where: {id: req.params.id, user_id: req.user.id}})
                 if (result) {
                     res.json(result);
                 } else {
@@ -141,7 +140,7 @@ module.exports = app => {
          */ 
         .put(async (req, res) => {
             try {
-                await Tasks.update(req.body, {where: {id: req.params.id, user_id: req.use.id}});
+                await Tasks.update(req.body, {where: {id: req.params.id, user_id: req.user.id}});
                 res.sendStatus(204);
             } catch (e) {
                 res.status(412).json({msg: e.message})
@@ -161,7 +160,7 @@ module.exports = app => {
          */
         .delete(async (req, res) => {
             try {
-                await Tasks.destroy({where: {id: req.params.id, user_id: req.use.id}})
+                await Tasks.destroy({where: {id: req.params.id, user_id: req.user.id}})
                 res.sendStatus(204);
             } catch(e) {
                 res.status(412).json({msg: e.message})

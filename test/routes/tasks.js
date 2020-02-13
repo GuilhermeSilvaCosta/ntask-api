@@ -19,11 +19,11 @@ describe('routes: Tasks', () => {
                     .then(() => Tasks.bulkCreate([{
                         id: 1,
                         title: 'Work',
-                        UserId: user.id
+                        user_id: user.id
                     }, {
                         id: 2,
                         title: 'Study',
-                        UserId: user.id
+                        user_id: user.id
                     }]))
                     .then(tasks => {
                         fakeTask = tasks[0];
@@ -40,7 +40,6 @@ describe('routes: Tasks', () => {
                     .set('Authorization', `JWT ${token}`)
                     .expect(200)
                     .end((err, res) => {
-                        console.log(res.body)
                         expect(res.body).to.have.length(2);
                         expect(res.body[0].title).to.eql('Work');
                         expect(res.body[1].title).to.eql('Study');
